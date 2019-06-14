@@ -1,0 +1,88 @@
+<div ng-hide="loading">
+    <a href="" ng-click="backToGroupDetail()"> Back To Group Detail</a>
+    <form name="updateGroupDetailsForm" class="width-800 container" autocomplete="off"
+        ng-show="isOwner || isAdmin">
+        <label><b>Group Name: </b></label>
+        <br>
+        <input type="text" class="form-field" name="groupName" ng-model="group.name" ng-minlength="2" ng-maxlength="100"
+            ng-focus="clearGroupNameError()" required>
+        <br>
+        <span class="span-error">{{error.groupName}}</span>
+        <br>
+        <label><b>Short Description: </b></label>
+        <br>
+        <input type="text" class="form-field" name="shortDescription" ng-model="group.shortDescription" ng-minlength="2"
+            ng-focus="clearShortDescriptionError()" ng-maxlength="100" required>
+        <br>
+        <span class="span-error">{{error.shortDescription}}</span>
+        <br>
+        <button type="button" class="btn btn-primary" name="updateGroupDetails" ng-click="updateGroup()"
+            ng-disabled="requestInProcess.updateGroupDetails || updateGroupDetailsForm.$pristine">{{updateGroupDetailsButton}}</button>
+    </form>
+    <form name="addUsersForm" class="width-800 container" autocomplete="off" ng-show="isOwner || isAdmin">
+        <label><b>Add Users: </b></label>
+        <br>
+        <tags-input name="usersAddField" class="tags" ng-model="usersToAddObjectArray" display-property="email"
+            add-from-autocomplete-only="true" placeholder="Enter Email" ng-focus="clearAddUsersError()">
+            <auto-complete source="loadTags($query)"></auto-complete>
+        </tags-input>
+        <span class="span-error">{{error.addUsers}}</span>
+        <br>
+        <button type="button" class="btn btn-primary" name="addUsersButton" ng-click="addUsers()"
+            ng-disabled="requestInProcess.addUsers || addUsersForm.$pristine">{{addUsersButton}}</button>
+    </form>
+    <form name="deleteUsersForm" class="width-800 container" autocomplete="off" ng-show="isOwner || isAdmin">
+        <div ng-show="usersInDeleteUsersArrayExist">
+            <br>
+            <label><b>Delete Users: </b></label>
+            <ul class="list-group width-485">
+                <div ng-repeat="user in usersInDeleteUsersArray">
+                    <li class="list-group-item">
+                        <input type="checkbox" checklist-model="usersToDelete" checklist-value="user.user.id">
+                        {{user.user.email}}
+                    </li>
+                </div>
+            </ul>
+            <span class="span-error">{{error.deleteUsers}}</span>
+            <br>
+            <button type="button" class="btn btn-danger" name="deleteUsersButton" ng-click="deleteUsers()"
+                ng-disabled="requestInProcess.deleteUsers || deleteUsersForm.$pristine">{{deleteUsersButton}}</button>
+        </div>
+    </form>
+    <form name="addAdminForm" class="width-800 container" autocomplete="off" ng-show="isOwner">
+        <div ng-show="addAdminExists">
+            <label><b>Add Admin: </b></label>
+            <ul class="list-group width-485">
+                <div ng-repeat="user in userLevelUsers track by $index">
+                    <li class="list-group-item">
+                        <input type="radio" name="userToAdmin" ng-value="user.id" ng-model="updateAdmin.groupUserID">
+                        {{user.user.email}}
+                    </li>
+                </div>
+            </ul>
+            <br>
+            <button type="button" class="btn btn-primary" name="addAdminButton" ng-click="addAdmin()"
+                ng-disabled="requestInProcess.addAdmin || addAdminForm.$pristine">{{addAdminButton}}</button>
+            <br>
+        </div>
+    </form>
+    <form name="removeAdminForm" class="width-800 container" autocomplete="off" ng-show="isOwner">
+        <div ng-show="removeAdminExists">
+            <label><b>Remove Admin: </b></label>
+            <ul class="list-group width-485">
+                <div ng-repeat="user in adminLevelUsers track by $index">
+                    <li class="list-group-item">
+                        <input type="radio" name="adminToUser" ng-value="user.id" ng-model="updateAdmin.groupUserID">
+                        {{user.user.email}}
+                    </li>
+                </div>
+            </ul>
+            <br>
+            <button type="button" class="btn btn-danger" name="removeAdminButton" ng-click="removeAdmin()"
+                ng-disabled="requestInProcess.removeAdmin  || removeAdminForm.$pristine">{{removeAdminButton}}</button>
+        </div>
+    </form>
+</div>
+<div ng-show="loading">
+    <img class="loader-gif" src="/Assets/Images/load.gif" />
+</div>

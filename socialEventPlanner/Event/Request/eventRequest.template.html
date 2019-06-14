@@ -1,0 +1,28 @@
+<div>
+    <a href="" ng-click="backToEventDetail()"> Back To Event Detail</a>
+    <div ng-hide="eventUserListExist">
+        <h1>No Requests Pending</h1>
+    </div>
+    <div class="width-800 container" ng-show="eventUserListExist">
+        <h3>Pending Requests: </h3>
+        <div class="wcontainer request-list">
+            <ol class="list-group">
+                <div name="eventRequests" ng-repeat="user in eventUsers">
+                    <li class="list-group-item">
+                        {{user.user.email}}
+                        <div class="float-right">
+                            <input type="radio" name="{{user.id}}" ng-value="requestStatus.Yes" ng-model="user.response_status">
+                            YES
+                            <input type="radio" name="{{user.id}}" ng-value="requestStatus.No" ng-model="user.response_status">
+                            NO
+                            <input type="radio" name="{{user.id}}" ng-value="requestStatus.Pending" ng-model="user.response_status">
+                            PENDING
+                        </div>
+                    </li>
+                </div>
+            </ol>
+        </div>
+        <span class="span-error">{{error}}</span><br>
+        <button type="button" class="btn btn-primary" ng-click="sendRequestResponse()">Update Requests</button>
+    </div>
+</div>

@@ -1,0 +1,59 @@
+<div>
+    <div ng-show="loading">
+        <img class="loader-gif" src="/Assets/Images/load.gif" />
+    </div>
+    <div ng-hide="loading">
+        <div>
+            <form class="form-inline container width-800">
+                <div>
+                    <input type="text" ng-model="search" class="form-control" placeholder="Search">
+                    <button class="btn btn-primary" type="button" name="searchButton"
+                        ng-click="viewEvents(1)">Search</button>
+                </div>
+                <select class="form-control" name="visibility" ng-model="item" ng-click="viewEvents(1)">
+                    <option ng-value="">USER STATUS</option>
+                    <option ng-value=0>PENDING</option>
+                    <option ng-value=1>GOING</option>
+                    <option ng-value=2>NOT GOING</option>
+                    <option ng-value=3>MAYBE</option>
+                </select>
+                <select class="form-control" name="userStatus" ng-model="user" ng-click="viewEvents(1)">
+                    <option ng-value="">ROLE</option>
+                    <option ng-value=1>ADMIN</option>
+                    <option ng-value=2>OWNER</option>
+                </select>
+                <select class="form-control" name="order" ng-model="order" ng-click="viewEvents(1)">
+                    <option ng-value="">SORTING</option>
+                    <option ng-value=0>NAME</option>
+                    <option ng-value=1>START</option>
+                </select>
+                <select class="form-control" name="visibility" ng-model="eventStatus" ng-click="viewEvents(1)">
+                    <option ng-value="">EVENT STATUS</option>
+                    <option ng-value=0>UPCOMING</option>
+                    <option ng-value=1>PAST</option>
+                </select>
+            </form>
+            <div class="container" ng-show="emptyEventList">
+                <h3>No Events to Display</h3>
+            </div>
+            <div ng-hide="emptyEventList" class="container width-800 card"
+                dir-paginate="event in list | orderBy: 'id' |itemsPerPage:itemsPerPage" total-items="total_count"
+                current-page="pagination.current">
+                <div class="clearfix card-header">
+                    <h3>{{event.name}}</h3>
+                    <p class="float-left">{{event.location}}</p>
+                    <p class="float-right">{{event.end | date}}</p>
+                    <p class="float-right">{{event.start | date}} -&nbsp;</p>
+                </div>
+                <div class="clearfix card-body">
+                    <p class="card-text">{{event.short_description}}</p>
+                    <a href="" class="stretched-link" ng-click="viewDetails(event.id)"></a>
+                </div>
+            </div>
+            <dir-pagination-controls class="container width-800" max-size="3" direction-links="true"
+                boundary-links="true" on-page-change="viewEvents(newPageNumber, oldPageNumber)"
+                template-url="customTemplate.html">
+            </dir-pagination-controls>
+        </div>
+    </div>
+</div>

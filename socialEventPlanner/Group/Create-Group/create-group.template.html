@@ -1,0 +1,36 @@
+<form name="createGroupForm" class="width-800 container" autocomplete="off">
+    <label><b>Group Name: </b></label>
+    <br>
+    <input type="text" class="form-field" name="groupName" ng-model="groupName" ng-minlength="2" ng-maxlength="100"
+        ng-focus="clearGroupNameError()" required>
+    <br>
+    <span class="span-error">{{error.groupName}}</span>
+    <br>
+    <br>
+    <label><b>Short Description: </b></label>
+    <br>
+    <input type="text" class="form-field" name="shortDescription" ng-model="shortDescription" ng-minlength="2"
+        ng-focus="clearShortDesciptionError()" ng-maxlength="100" required>
+    <br>
+    <span class="span-error">{{error.shortDescription}}</span>
+    <br>
+    <br>
+    <label><b>Users: </b></label>
+    <br>
+    <tags-input class="tags" ng-model="usersArrayUser" display-property="email" add-from-autocomplete-only="true"
+        placeholder="Enter Email" ng-focus="clearAddUsersError()">
+        <auto-complete source="loadTags($query)"></auto-complete>
+    </tags-input>
+    <span class="span-error">{{error.addUsers}}</span>
+    <br>
+    <label><b>Admins: </b></label>
+    <br>
+    <tags-input class="tags" ng-model="usersArrayAdmin" display-property="email" add-from-autocomplete-only="true"
+        placeholder="Enter Email" ng-focus="clearAddUsersError()">
+        <auto-complete source="loadTags($query)"></auto-complete>
+    </tags-input>
+    <span class="span-error">{{error.addAdmins}}</span>
+    <br>
+    <button type="button" class="btn btn-primary" name="createGroupButton" ng-click="createGroup()"
+        ng-disabled="requestInProcess">{{createGroupButton}}</button>
+</form>

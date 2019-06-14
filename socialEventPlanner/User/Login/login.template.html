@@ -1,0 +1,29 @@
+<div>
+    <form name="loginForm" class="width-485 container">
+        <label><b>Email :</b></label>
+        <br>
+        <input type="email" class="form-field" name="email" ng-model="email" ng-focus="clearEmailError()"
+            pattern="^[\w\.]+@([\w-]+\.)+[\w]{2,4}$" required>
+        <br>
+        <span class="span-error"
+            ng-show="loginForm.email.$touched && loginForm.email.$invalid && loginForm.email.$dirty">
+            Enter valid Email! </span>
+        <span class="span-error" ng-show="loginForm.email.$touched && loginForm.email.$pristine"> Email is required!
+        </span>
+        <span class="span-error">{{error['email']}}</span>
+        <br>
+
+        <label><b>Password :</b></label>
+        <br>
+        <input type="password" class="form-field" name="password" ng-model="password" ng-focus="clearPasswordError()"
+            required><br>
+        <span class="span-error">{{error['password']}}</span>
+        <span class="span-error">{{loginError}}</span>
+        <br>
+        <button type="button" class="btn btn-primary" name="loginButton" ng-click="loginUser()"
+            ng-disabled="loginForm.email.$invalid || requestInProcess">
+            Login </button>
+        <a class="float-right" ng-click="forgotPassword()" href="">Forgot Password ?</a>
+    </form>
+
+</div>

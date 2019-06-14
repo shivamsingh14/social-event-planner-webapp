@@ -1,0 +1,60 @@
+<div class="width-800 container">
+    <form name="userProfileForm">
+        <div class="clearfix">
+            <div class="float-left">
+                <label><b>First Name:</b></label>
+                <br>
+                <input class="form-field" type="text" name="userFirstName" ng-model="user['firstName']" required />
+                <br>
+                <span class="span-error" ng-show="userProfileForm.userFirstName.$touched && userProfileForm.userFirstName.$error.required">First
+                    Name is Mandatory</span>
+                <br>
+            
+                <label><b>Last Name:</b></label>
+                <br>
+                <input class="form-field" type="text" name="userLastName" ng-model="user['lastName']" />
+                <br><br>
+            </div>
+
+            <div class="float-right">
+                <img width="100px" height="100px" src="{{user['profile_picture']}}" />
+                <br><br>
+                <input type="file" name="userProfilePicture" accept=".png, .jpg, .jpeg" file-upload>
+                <br>
+                <span class="span-error">{{error.profile_picture}}</span>
+            </div>
+            
+        </div>
+
+        <label><b>Email:</b></label>
+        <br>
+        <p>{{user['email']}}</p>
+
+        <label><b>Gender:</b></label>
+        <br>
+        <input type="radio" name="userGender" ng-value="'M'" ng-model="user['gender']">
+        Male
+        <input type="radio" name="userGender" ng-value="'F'" ng-model="user['gender']">
+        Female
+        <br><br>
+
+        
+
+        <label><b>DOB:</b></label>
+        <input name=userDob type="date" ng-model="user['date_of_birth']" min="1950-01-01" max="{{maxDob}}" />
+        <br>
+        <span class="span-error" ng-show="userProfileForm.userDob.$error.max">DOB should be less than current date</span>
+        <span class="span-error" ng-show="userProfileForm.userDob.$error.min">DOB should be more than 01-01-1950</span>
+        <span class="span-error" ng-show="userProfileForm.userDob.$invalid">Invalid Date</span>
+        <br>
+
+        <button type="button" class="btn btn-primary" name="buttonUpdate" ng-disabled="userProfileForm.$pristine || userProfileForm.userEmail.$error.email || userProfileForm.userFirstName.$error.required || userProfileForm.userDob.$error.max || userProfileForm.userDob.$error.min || userProfileForm.userDob.$invalid"
+            ng-click="updateUser()">Update</button>
+
+        <button type="button" class="btn btn-secondary" name="buttonReset" ng-disabled="userProfileForm.$pristine"
+            ng-click="resetForm()">Reset</button>
+
+        <button type="button" class="btn btn-dark" name="buttonChangePassword" ng-click="passwordChange()">Change
+            Password</button>
+    </form>
+</div>

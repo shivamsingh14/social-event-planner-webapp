@@ -1,0 +1,31 @@
+{
+  "name": "social_event_planner_webapp",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Shivam Singh <shivam.singh@joshtechnologygroup.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.7.7",
+    "angular-ui-router": "^1.0.20",
+    "restangular": "^1.6.1",
+    "angular-cookies": "^1.7.7",
+    "angular-animate": "1.7.7",
+    "angular-toastr": "^2.1.1",
+    "angularUtils-pagination": "angular-utils-pagination#^0.11.1",
+    "ng-tags-input": "3.2.0",
+    "checklist-model": "^1.0.0",
+    "angular-bootstrap": "^2.5.0",
+    "normalize.css": "^8.0.1",
+    "bootstrap": "^4.3.1"
+  }
+}

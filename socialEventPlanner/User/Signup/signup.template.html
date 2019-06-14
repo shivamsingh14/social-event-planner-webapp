@@ -1,0 +1,75 @@
+<div>
+    <form class="width-600 container" name="signup_form">
+        <label><b>First name: </b></label> <br>
+        <input type="text" class="form-field" name="firstName" ng-model="firstName" ng-minlength="2" ng-focus="clearFirstNameError()" required><br>
+        <span class="span-error" ng-show="signup_form.firstName.$touched && signup_form.firstName.$invalid"><br>
+            Enter
+            valid name! </span>
+        <span class="span-error" ng-show="signup_form.firstName.$touched && signup_form.firstName.$error.required">
+            Name is required! </span>
+        <span class="span-error">{{error['firstName']}}</span>
+        <br>
+
+        <label><b>Last Name: </b></label><br>
+        <input type="text" class="form-field" name="lastName" ng-model="lastName" ng-minlength="2"><br>
+        <span class="span-error" ng-show="signup_form.lastName.$touched && signup_form.lastName.$invalid"> Enter
+            valid Name! </span>
+        <br>
+        
+        <label><b>Email: </b></label><br>
+        <input type="email" class="form-field" name="email" pattern="^[\w\.]+@([\w-]+\.)+[\w]{2,4}$" ng-model="email" ng-focus="clearEmailError()" required><br>
+        <span class="span-error" ng-show="signup_form.email.$touched && signup_form.email.$invalid && signup_form.email.$dirty"><br>Enter valid
+            Email!
+        </span>
+        <span class="span-error" ng-show="signup_form.email.$touched && signup_form.email.$error.required"> Email
+            is
+            required! </span>
+        <span class="span-error">{{error['email']}}</span>
+        <br>
+
+        <label><b>Password: </b></label><br>
+        <input type="password" class="form-field" name="password" ng-model="password" ng-minlength="8" ng-focus="clearPasswordError()" required><br>
+        <span class="span-error" ng-show="signup_form.password.$touched && signup_form.password.$error.required"><br>
+            Password is Required</span>
+        <span class="span-error" ng-show="signup_form.password.$touched && signup_form.password.$invalid"><br>
+            Minimum Length is 8 </span>
+        <span class="span-error">{{error['password']}}</span>
+        <br>
+
+
+        <label><b>Confirm Password: </b></label><br>
+        <input type="password" class="form-field" name="repeat_password" ng-model="repeat_password" ng-focus="clearConfirmPasswordError()" required><br>
+        <span class="span-error" ng-show="signup_form.repeat_password.$touched && signupForm.repeat_password.$pristine">Confirm
+            Password
+            is required.</span>
+        <span class="span-error">
+        {{passwordError}}</span>
+        <span class="span-error" ng-show="password != repeat_password && signup_form.repeat_password.$touched">Passwords
+            do not
+            match.</span>
+        <span class="span-error">{{error['confirmPassword']}}</span>
+        <br>
+
+        <label><b>Gender:</b></label>
+        <br>
+        <input type="radio" id="male" name="gender" ng-model="gender" ng-value="M" ng-checked="gender=='M'">
+        Male
+        <input type="radio" id="female" name="gender" ng-model="gender" ng-value="F" ng-checked="gender=='F'">
+        Female
+        <br><br>
+
+        <label><b>DOB:</b></label>
+        <input name=userDob type="date" ng-model="dob" min="1950-01-01" max="{{maxDob}}" /><br>
+        <span class="span-error" ng-show="signup_form.userDob.$error.max">DOB should be less than current date</span>
+        <span class="span-error" ng-show="signup_form.userDob.$error.min">DOB should be more than 01-01-1950</span>
+        <span class="span-error" ng-show="signup_form.userDob.$invalid">Invalid Date</span>
+        <br>
+
+        <span class="span-error">{{signupError}}</span>
+
+        <button class="btn btn-primary" type="button" name="signupButton" ng-click="signupUser()"
+            ng-disabled="(password != repeat_password && signup_form.password.$dirty && signup_form.repeat_password.$dirty) || signup_form.userDob.$error.max || signup_form.userDob.$error.min || signup_form.userDob.$invalid || requestInProcess">
+            {{submitButton}} </button>
+
+    </form>
+</div>

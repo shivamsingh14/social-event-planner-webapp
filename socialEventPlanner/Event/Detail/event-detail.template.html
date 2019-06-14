@@ -1,0 +1,103 @@
+<form ng-hide="loading" name="eventDetailForm" class="width-800 container" autocomplete="off">
+    <div ng-show="isPublished">
+        <div ng-show="showInviteButton">
+            <label><b>Current status: </b> {{inviteStatusString}} </label>
+            <br>
+            <label><b>Will you be attending? </b></label>
+            <button ng-disabled="inviteStatusString=='Yes'" type="button" class="btn btn-primary" name="inviteYesButton"
+                ng-click="inviteAction('YES')">Yes</button>
+            &nbsp;&nbsp;
+            <button ng-disabled="inviteStatusString=='No'" type="button" class="btn btn-danger" name="inviteNoButton"
+                ng-click="inviteAction('NO')">No</button>
+            &nbsp;&nbsp;
+            <button ng-disabled="inviteStatusString=='Maybe'" type="button" class="btn btn-warning"
+                name="inviteMaybeButton" ng-click="inviteAction('MAYBE')">Maybe</button>
+        </div>
+        <div ng-show="showRequestButton">
+            <button type="button" class="btn btn-primary" name="sendRequestButton" ng-click="requestAction(1)">Send
+                Request</button>
+        </div>
+        <div ng-show="showRequestCancelButton">
+            &nbsp;&nbsp;
+            <button type="button" class="btn btn-danger" name="cancelRequestButton" ng-click="requestAction(2)">Cancel
+                Request</button>
+        </div>
+    </div>
+    <br>
+    <label><b>Number of other people also watching this event: </b></label>
+    <label>{{displayMessage}}</label>
+    <br>
+    <br>
+    <label><b>Event Name: </b></label>
+    <br>
+    <p>{{event.name}}</p>
+    <br>
+    <label><b>Short Description: </b></label>
+    <br>
+    <p>{{event.shortDescription}}</p>
+    <br>
+    <div ng-show="longDescriptionExists">
+        <label><b>Long Description: </b></label>
+        <br>
+        <p>{{event.longDescription}}</p>
+        <br>
+    </div>
+    <div ng-show="groupExists">
+        <label><b>Group: </b></label>
+        <br>
+        <p>{{event.group.name}}</p>
+        <br>
+    </div>
+    <label><b>Event Start: </b></label>
+    <br>
+    <p ng-bind="event.start | date:'dd-MM-yyyy @ HH:mm'"></p>
+    <br>
+    <label><b>Event End: </b></label>
+    <br>
+    <p ng-bind="event.end | date:'dd-MM-yyyy @ HH:mm'"></p>
+    <br>
+    <label><b>Available Seats: </b></label>
+    <br>
+    <p>{{event.availableSeats}}</p>
+    <br>
+    <label><b>Cost: </b></label>
+    <br>
+    <p>{{event.costPerSeat}}</p>
+    <br>
+    <label><b>Event Status: </b></label>
+    <br>
+    <p>{{event.eventStatus}}</p>
+    <br>
+    <label><b>Created By: </b></label>
+    <br>
+    <p>{{eventOwner.user.email}}</p>
+    <br>
+    <div ng-show="adminsExist">
+        <label><b>Organisers: </b></label>
+        <ul class="list-group width-485">
+            <div ng-repeat="user in eventAdmins">
+                <li class="list-group-item">{{user.user.email}}</li>
+            </div>
+        </ul>
+    </div>
+    <br>
+    <div ng-show="usersExist">
+        <label><b>Attendees: </b></label>
+        <ul class="list-group width-485">
+            <div ng-repeat="user in eventUsers">
+                <li class="list-group-item">{{user.user.email}}</li>
+            </div>
+        </ul>
+        <br>
+    </div>
+    <div ng-show="((isAdmin && isPublished) || (isOwner))">
+        <button type="button" class="btn btn-primary" name="viewRequestsButton" ng-click="viewRequests()">View
+            Requests</button>
+        &nbsp;&nbsp;
+        <button type="button" class="btn btn-primary" name="updateEventButton" ng-click="updateEvent()">Edit
+            Event</button>
+    </div>
+</form>
+<div ng-show="loading">
+    <img class="loader-gif" src="/Assets/Images/load.gif" />
+</div>

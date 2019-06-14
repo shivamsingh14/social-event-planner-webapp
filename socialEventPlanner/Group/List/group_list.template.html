@@ -1,0 +1,40 @@
+<div>
+    <div ng-show="loading">
+        <img class="loader-gif" src="/Assets/Images/load.gif" />
+    </div>
+    <div ng-hide="loading">
+        <div>
+            <form class="form-inline container width-800">
+                <div>
+                    <input type="text" ng-model="search" class="form-control" placeholder="Search">
+                    <button class="btn btn-primary" type="button" name="searchButton"
+                        ng-click="getGroups(1)">Search</button>
+                </div>
+
+                <select name="visibility" class="form-control" ng-model="item" ng-change="getGroups(1)">
+                    <option ng-value="">Role</option>
+                    <option ng-value="2">Owner</option>
+                    <option ng-value="1">Admin</option>
+                </select>
+            </form>
+            <div class="container" ng-show="emptyGroupList">
+                    <h3>No Groups to Display</h3>
+            </div>
+            <div ng-hide="emptyGroupList" class="container width-800 card" dir-paginate="group in list |itemsPerPage:itemsPerPage"
+                total-items="total_count" current-page="pagination.current">
+                <div class="clearfix card-header">
+                    <h3>{{group.group.name}}</h3>
+                </div>
+                <div class="clearfix card-body">
+                    <p class="card-text">{{group.group.short_desc}}</p>
+                    <a href="" class="stretched-link" ng-click="viewDetails(group.group.id)"></a>
+                </div>
+            </div>
+
+            <dir-pagination-controls class="container width-800" max-size="3" direction-links="true"
+                boundary-links="true" on-page-change="getGroups(newPageNumber)" template-url="customTemplate.html">
+            </dir-pagination-controls>
+
+        </div>
+    </div>
+</div>

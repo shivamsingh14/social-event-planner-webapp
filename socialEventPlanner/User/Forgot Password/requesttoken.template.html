@@ -1,0 +1,19 @@
+<div class="width-600 container">
+    <form name="requesttoken_form">
+        <label><b>Email :</b></label>
+        <br>
+        <input type="email" class="form-field" name="email" ng-model="email" 
+            pattern="^[\w\.]+@([\w-]+\.)+[\w]{2,4}$" required>
+        <br>
+        <span class="span-error"
+            ng-show="requesttoken_form.email.$touched && requesttoken_form.email.$invalid && requesttoken_form.email.$dirty">
+            Enter valid Email! </span>
+        <span class="span-error" ng-show="requesttoken_form.email.$touched && requesttoken_form.email.$pristine"> Email
+            is required!
+        </span>
+        <br>
+        <button type="button" class="btn btn-primary" name="requestTokenButton" ng-click="requestToken()"
+            ng-disabled="requesttoken_form.email.$invalid || requesttoken_form.email.$error.required || requestInProcess">
+            Send Reset Link </button>
+    </form>
+</div>

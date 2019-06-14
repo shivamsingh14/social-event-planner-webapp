@@ -1,0 +1,221 @@
+<div>
+    <div ng-show="loading">
+        <img class="loader-gif" src="/Assets/Images/load.gif" />
+    </div>
+    <div ng-hide="loading">
+        <a href="" ng-click="backToEventDetail()"> Back To Event Detail</a>
+        <div class="width-500 container">
+            <form name="eventDetailForm">
+                <h2>Event Detail: </h2>
+                <br>
+                <label><b>Event Name: </b></label>
+                <br>
+                <input name="event_name" class="form-field" type="text" ng-model="event.name" required>
+                <br>
+                <span class="span-error" ng-show="eventDetailForm.event_name.$error.required">Name is Required!</span>
+                <sapn class="span-error">{{error.name}}</sapn>
+                <br>
+
+                <label><b>Short Description: </b></label>
+                <br>
+                <input name="event_short_description" class="form-field" type="text" ng-model="event.shortDescription"
+                    required>
+                <br>
+                <span class="span-error" ng-show="eventDetailForm.event_short_description.$error.required">Short
+                    Description is
+                    Required!</span>
+                <sapn class="span-error">{{error.shortDescription}}</sapn>
+                <br>
+
+                <label><b>Long Description: </b></label>
+                <br>
+                <input name="event_long_description" class="form-field" type="text" ng-model="event.longDescription">
+                <br>
+                <sapn class="span-error">{{error.longDescription}}</sapn>
+                <br>
+
+                <label><b>Start: </b></label>
+                <br>
+                <input name="event_start" class="form-field" type="datetime-local" ng-model="event.start" required>
+                <br>
+                <span class="span-error" ng-show="eventDetailForm.event_start.$error.required">Start Date and Time is
+                    Required!</span>
+                <span class="span-error" ng-show="eventDetailForm.event_start.$invalid">Start Date and Time Format is
+                    not
+                    correct!</span>
+                <sapn class="span-error">{{error.start}}</sapn>
+                <br>
+
+                <label><b>End: </b></label>
+                <br>
+                <input name="event_end" class="form-field" type="datetime-local" ng-model="event.end" ng-min="maxDob" required>
+                <br>
+                <span class="span-error" ng-show="eventDetailForm.event_end.$error.required">End Date and Time is
+                    Required!</span>
+                <span class="span-error" ng-show="eventDetailForm.event_end.$invalid">End Date and Time is not
+                    correct!</span>
+                <span class="span-error" ng-show="event.start >= event.end">Start of an Event cannot be after end time</span>
+                <sapn class="span-error">{{error.end}}</sapn>
+                <br>
+
+                <label><b>Location: </b></label>
+                <br>
+                <input name="event_location" class="form-field" type="text" ng-model="event.location" required>
+                <br>
+                <span class="span-error" ng-show="eventDetailForm.event_location.$error.required">Location is Required!</span>
+                <sapn class="span-error">{{error.location}}</sapn>
+                <br>
+
+                <div ng-hide="event.event_status!=0">
+                    <label><b>Visibility: </b></label>
+                    <br>
+                    <input type="radio" name="eventVisibility" ng-value="0" ng-model="event.visibility">
+                    PUBLIC
+                    <input type="radio" name="eventVisibility" ng-value="1" ng-model="event.visibility">
+                    PUBLIC FOR A GROUP
+                    <input type="radio" name="eventVisibility" ng-value="2" ng-model="event.visibility">
+                    PRIVATE
+                    <br>
+                </div>
+
+                <div ng-show="event.event_status==0 && event.visibility==1">
+                    <label><b>SELECT GROUP: </b></label>
+                    <br>
+                    <ul class="list-group width-485">
+                        <div ng-repeat="group in user.groups track by $index">
+                            <li class="list-group-item">
+                                <input type="radio" name="group" ng-value="group.id" ng-model="updateGroup.groupId">
+                                {{group.name}}
+                            </li>
+                        </div>
+                    </ul>
+                    <span class="span-error" ng-show="updateGroup.groupId==null">This is required for visibility:
+                        Public
+                        For a
+                        Group</span>
+                    <sapn class="span-error">{{error.group}}</sapn>
+                    <br>
+                </div>
+
+                <label><b>Available Seats: </b></label>
+                <br>
+                <input name="event_available_seats" type="number" class="form-field" ng-model="event.available_seats"
+                    required>
+                <br>
+                <span class="span-error" ng-show="eventDetailForm.event_available_seats.$error.required">Available
+                    Seats is
+                    Required!</span>
+                <sapn class="span-error">{{error.available_seats}}</sapn>
+                <br>
+
+                <label><b>Cost Per Seat: </b></label>
+                <br>
+                <input name="event_cost_per_seat" class="form-field" type="number" ng-model="event.cost_per_seat"
+                    required>
+                <br>
+                <span class="span-error" ng-show="eventDetailForm.event_cost_per_seat.$error.required">Cost Per Seat is
+                    Required!</span>
+                <sapn class="span-error">{{error.cost_per_seat}}</sapn>
+                <br>
+
+                <sapn class="span-error">{{non_field_errors}}</sapn>
+                <br>
+
+                <button type="button" class="btn btn-primary" ng-click="updateEvent()" ng-disabled="eventDetailForm.$pristine || eventDetailForm.$invalid || (updateGroup.groupId==null && event.visibility==1)">Update</button>
+                <button type="button" class="btn btn-secondary" ng-click="resetEvent()" ng-disabled="eventDetailForm.$pristine">Reset</button>
+            </form>
+
+            <br>
+
+            <form name="addEventUsersForm" class="width-800" autocomplete="off">
+                <label><b>Add Users: </b></label>
+                <br>
+                <tags-input name="usersAddField" class="tags" ng-model="eventAddUserList" display-property="email"
+                    add-from-autocomplete-only="true" placeholder="Enter Email" ng-focus="clearAddUsersError()">
+                    <auto-complete source="loadTags($query)"></auto-complete>
+                </tags-input>
+                <br>
+
+                
+                <br>
+                <div ng-show="user.isOwner">
+                    <label><b>Add Admins: </b></label>
+                    <tags-input name="adminsAddField" class="tags" ng-model="eventAddAdminList" display-property="email"
+                        add-from-autocomplete-only="true" placeholder="Enter Email" ng-focus="clearAddUsersError()">
+                        <auto-complete source="loadTags($query)"></auto-complete>
+                    </tags-input>
+                    <br>
+                </div>
+                <span class="span-error" ng-show="addEventUsersForm.usersAddField.$invalid || addEventUsersForm.adminsAddField.$invalid">Select
+                    users only from autocomplete</span>
+                <span class="span-error" ng-show="errorAddUser">{{error.addUsers}}</span>
+
+                <button class="btn btn-primary" type="button" name="addUserButton" ng-click="addUsersAndAdmins()"
+                    ng-disabled="addEventUsersForm.$pristine || addEventUsersForm.usersAddField.$invalid || addEventUsersForm.adminsAddField.$invalid">Add
+                    Users and
+                    Admins</button>
+            </form>
+
+            <br>
+
+            <form name="deleteEventUsersForm" class="width-800" autocomplete="off" ng-show="eventUserExist || (eventAdminExist && user.isOwner)">
+                <label><b>Delete Users: </b></label>
+                <ul class="list-group width-485">
+                    <div ng-repeat="user in event.eventUsers">
+                        <li class="list-group-item">
+                            <input type="checkbox" checklist-model="usersToDelete" checklist-value="user.user.id">
+                            {{user.user.email}}
+                        </li>
+                    </div>
+                    <div ng-show="user.isOwner">
+                        <div ng-repeat="user in event.eventAdmins">
+                            <li class="list-group-item">
+                                <input type="checkbox" checklist-model="usersToDelete" checklist-value="user.user.id">
+                                {{user.user.email}}
+                            </li>
+                        </div>
+                    </div>
+                </ul>
+                <span class="span-error">{{error.deleteUsers}}</span>
+                <br>
+                <button type="button" class="btn btn-danger" name="deleteUsersButton" ng-click="open()" ng-disabled="deleteEventUsersForm.$pristine">Delete
+                    Users</button>
+            </form>
+
+            <br>
+
+            <form name="addAdminForm" class="width-800" ng-show="user.isOwner && eventUserExist">
+                <label><b>Add Admin: </b></label>
+                <ul class="list-group width-485">
+                    <div ng-repeat="user in event.eventUsers track by $index">
+                        <li class="list-group-item">
+                            <input type="radio" name="userToAdmin" ng-value="user.id" ng-model="updateAdmin.eventUserId">
+                            {{user.user.email}}
+                        </li>
+                    </div>
+                </ul>
+                <button type="button" class="btn btn-primary" name="addAdminButton" ng-click="addAdmin()" ng-disabled="addAdminForm.$pristine">Add
+                    Admin</button>
+            </form>
+
+            <br>
+
+            <form name="removeAdminForm" class="width-800" ng-show="user.isOwner && eventAdminExist">
+                <label><b>Remove Admin: </b></label>
+                <ul class="list-group width-485">
+                    <div ng-repeat="user in event.eventAdmins track by $index">
+                        <li class="list-group-item">
+                            <input type="radio" name="userToAdmin" ng-value="user.id" ng-model="updateUser.eventUserId">
+                            {{user.user.email}}
+                        </li>
+                    </div>
+                </ul>
+                <button type="button" class="btn btn-danger" name="removeAdminButton" ng-click="removeAdmin()"
+                    ng-disabled="removeAdminForm.$pristine">Remove
+                    Admin</button>
+            </form>
+            <button class="btn btn-success" type="button" ng-show="event.event_status==0 && user.isOwner" ng-click="changeEventStatus(1)">Publish Event</button>
+            <button class="btn btn-danger" type="button" ng-show="event.event_status==1 && user.isOwner" ng-click="changeEventStatus(2)">Cancel Event</button>
+        </div>
+    </div>
+</div>

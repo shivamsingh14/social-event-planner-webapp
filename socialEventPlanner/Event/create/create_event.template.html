@@ -1,0 +1,61 @@
+<div>
+    <form class="width-600 container" name="createEventForm">
+        <label><b>Name: </b></label> <br>
+        <input type="text" class="form-field" name="name" ng-model="eventObject.name" ng-focus="clearError('eventName')" required><br>
+        <span class="span-error">{{error.eventName}}</span>
+        <br>
+
+        <label><b>Short Description: </b></label> <br>
+        <input type="text" class="form-field" name="shortDescription" ng-model="eventObject.short_description" ng-focus="clearError('shortDescription')" required><br>
+        <span class="span-error">{{error.shortDescription}}</span>
+        <br>
+
+        <label><b>Long Description: </b></label> <br>
+        <input type="text" class="form-field" name="longDescription" ng-model="eventObject.long_description" ng-focus= "clearError('longDesciption')"><br>
+        <br>
+
+        <label><b>Start Date: </b></label> <br>
+        <input type="datetime-local" class="form-field" name="startDate" ng-model="eventObject.start" ng-focus="clearError('startDate')" ng-min="currentDate" required><br>
+        <span class="span-error" ng-show="createEventForm.startDate.$error.min">Start Date must be greater than current time</span>
+        <span class="span-error">{{error.startDate}}</span>
+        <br>
+
+        <label><b>End Date: </b></label> <br>
+        <input type="datetime-local" class="form-field" name="endDate" ng-model="eventObject.end" ng-focus="clearError('endDate')" required><br>
+        <span class="span-error">{{error.endDate}}</span>
+        <br>
+
+        <label><b>Location: </b></label> <br>
+        <input type="text" class="form-field" name="location" ng-model="eventObject.location" ng-focus= "clearError('location')" required><br>
+        <span class="span-error">{{error.location}}</span>
+        <br>
+
+        <label><b>Visibility: </b></label> <br>
+        <select name="visibility" ng-model="eventObject.visibility" ng-change="visibility(item)">
+            <option value="">Visibility</option>
+            <option ng-value=0 >PUBLIC</option>
+            <option ng-value=1 >PUBLIC_FOR_A_GROUP</option>
+            <option ng-value=2 >PRIVATE</option>
+        </select>
+        <br>
+        <br>
+        <select ng-show="publicForGroup" ng-model="group" ng-change="selectGroup()"
+            ng-options="item as item.group.name for item in items">
+            <option value="">Select a Group</option>
+        </select><br><br>
+
+        <label><b>Available Seats: </b></label> <br>
+        <input type="number" class="form-field" name="availableSeats" ng-model="eventObject.available_seats" ng-focus="clearError('availableSeats')" required><br>
+        <span class="span-error">{{error.availableSeats}}</span>
+        <br>
+
+        <label><b>Cost Per Seat: </b></label> <br>
+        <input type="number" class="form-field" name="cost" ng-model="eventObject.cost_per_seat" ng-focus="clearError('cost')" required><br>
+        <span class="span-error">{{error.cost}}</span>
+        <br>
+
+        <button type="button" class="btn btn-primary" name="buttonCreateEvent" ng-disabled="requestInProcess"
+            ng-click="createEvent()">{{createEventButton}}</button>
+
+    </form>
+</div>

@@ -1,0 +1,1 @@
+angular.module('socialEventPlanner', ['ui.router', 'restangular', 'ngCookies', 'socialEventPlanner.user', 'socialEventPlanner.group', 'socialEventPlanner.event', 'ngAnimate', 'toastr', 'ui.bootstrap']);

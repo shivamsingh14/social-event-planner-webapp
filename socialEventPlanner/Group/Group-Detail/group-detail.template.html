@@ -1,0 +1,29 @@
+<form ng-hide="loading" name="updateGroupForm" class="width-800 container" autocomplete="off">
+    <label><b>Group Name: </b></label>
+    <br>
+    <p>{{group.name}}</p>
+    <br>
+    <label><b>Short Description: </b></label>
+    <br>
+    <p>{{group.shortDescription}}</p>
+    <br>
+    <label><b>Users: </b></label>
+    <ul class="list-group width-485">
+        <div ng-repeat="user in group.groupDetails">
+            <li class="list-group-item">{{user.user.email}}</li>
+        </div>
+    </ul>
+    <br>
+    <div ng-if="isAdmin || isOwner">
+        <button type="button" class="btn btn-primary" name="updateGroupButton" ng-click="updateGroup()">Edit
+            Group</button>
+    </div>
+    <br>
+    <div ng-if="isNotOwner">
+        <button type="button" class="btn btn-secondary" name="leaveGroupButton" ng-click="leaveGroup()">Leave
+            Group</button>
+    </div>
+</form>
+<div ng-show="loading">
+        <img class="loader-gif" src="/Assets/Images/load.gif" />
+</div>

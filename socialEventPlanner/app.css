@@ -1,0 +1,115 @@
+.container{
+    margin: 20px auto;
+}
+
+.clearfix {
+    overflow: hidden;
+}
+
+.span-error {
+    color : red
+}
+
+.flex-one {
+    flex: 1;
+}
+
+.flex-two {
+    flex: 2;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.form-field {
+    width: 450px;
+    border: 0px;
+    background: transparent;
+    border-bottom: 1px solid grey;
+}
+
+.form-control {
+    width: 450px;
+}
+
+.header {
+    background: #7095FF;
+    padding: 20px;
+}
+
+.header-link {
+    color: white;
+}
+
+.header-link:hover {
+    color: wheat;
+}
+
+.logo {
+    color: white;
+    font-family: 'Lucida Sans';
+    text-decoration: none;
+}
+
+.logo :hover {
+    text-decoration: none;
+    color: white;
+}
+
+.width-500 {
+    width: 500px;
+}
+
+.width-600 {
+    width: 600px;
+}
+
+.width-800 {
+    width: 800px;
+}
+
+.width-485 {
+    width: 485px;
+}
+
+.tags {
+    height: 100px;
+    width: 450px;
+}
+
+tags-input .tags .tag-list {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+}
+
+tags-input .tags .tag-item {
+    display: inline-table;
+    min-width: 150px;
+}
+
+.list-group {
+    max-height: 300px;
+    margin-bottom: 10px;
+    overflow:scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+.request-list {
+    margin-top:0px;  
+}
+
+.loader-gif {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    height: 200px;
+    margin-top: -100px;
+    margin-left: -100px;
+}

@@ -1,0 +1,4 @@
+socialEventPlanner/bower_components/**
+socialEventPlanner/Group/Create-Group/create-group.controller.js
+socialEventPlanner/Event/Create/createEvent.controller.js
+socialEventPlanner/Event/Update/updateEvent.controller.js
